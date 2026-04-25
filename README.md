@@ -27,16 +27,20 @@ MeteorWatch is an open-source Progressive Web App (PWA) that aggregates **public
 | Feature | Description |
 |---|---|
 | 🌌 **Sky status** | Aggregated NEO + fireball semaphore (green/yellow/red) |
-| ☄️ **NEO feed** | NASA NeoWs 7-day feed with PHA/distance/size filters and Sentry top |
-| 🔥 **Fireballs** | World map with energy-scaled markers from CNEOS Fireball DB |
+| 🌙 **Sky Tonight** | Moon phase, sun + twilights, ISS passes, active showers, today's NEO |
+| 🖼️ **APOD** | NASA Astronomy Picture of the Day + 7-day archive |
+| 🌍 **Earth Live** | DSCOVR EPIC images + NASA GIBS satellite layers (MODIS, VIIRS) with day/night terminator |
+| ☄️ **NEO feed** | NASA NeoWs 7-day feed with name search, PHA/distance/size filters and Sentry top |
+| 🔥 **Fireballs** | World map (OSM or NASA GIBS) with energy-scaled markers from CNEOS Fireball DB |
 | 🪨 **Meteorites** | 8 famous falls + classification glossary, link to Meteoritical Bulletin DB |
 | ✨ **Meteor showers** | Annual calendar timeline, ZHR, parent body, observation tip |
 | 📉 **Reentry** | BSTAR-based lifetime estimate, 90-min ground track, ±20% disclaimer |
-| 🛰️ **ISS Live** | Real-time position, 48h pass predictor, .ics calendar export |
+| 🛰️ **ISS Live** | Real-time position, day/night terminator, 48h pass predictor, .ics calendar export |
 | 📚 **Education** | Glossary, history, scientific pipeline, official sources |
 | 🌍 **i18n** | Italian + English with browser auto-detection |
 | 🔔 **Opt-in alerts** | NEO threshold, fireballs, ISS visible passes |
 | 📱 **PWA** | Offline cache, installable, mobile-first dark theme |
+| ↗️ **Share** | Web Share API + clipboard fallback for events |
 
 ### Quick start
 
@@ -104,16 +108,20 @@ MeteorWatch è una **PWA open-source** che aggrega dati pubblici **NASA, JPL, ES
 | Feature | Descrizione |
 |---|---|
 | 🌌 **Status del cielo** | Semaforo aggregato NEO + bolidi (verde/giallo/rosso) |
-| ☄️ **NEO feed** | Feed NASA NeoWs 7 giorni con filtri PHA/distanza/dimensione e Sentry top |
-| 🔥 **Bolidi** | Mappa mondiale con marker scalati per energia da CNEOS Fireball DB |
+| 🌙 **Cielo stanotte** | Fase lunare, sole + crepuscoli, passaggi ISS, sciami attivi, NEO di oggi |
+| 🖼️ **APOD** | NASA Astronomy Picture of the Day + archivio 7 giorni |
+| 🌍 **Terra dallo spazio** | Immagini DSCOVR EPIC + tile NASA GIBS (MODIS, VIIRS) con terminatore giorno/notte |
+| ☄️ **NEO feed** | Feed NASA NeoWs 7 giorni con ricerca per nome, filtri PHA/distanza/dimensione e Sentry top |
+| 🔥 **Bolidi** | Mappa mondiale (OSM o NASA GIBS) con marker scalati per energia da CNEOS Fireball DB |
 | 🪨 **Meteoriti** | 8 cadute famose + glossario classi, link a Meteoritical Bulletin DB |
 | ✨ **Sciami meteorici** | Calendario annuale, ZHR, corpo progenitore, consigli di osservazione |
 | 📉 **Rientri** | Stima vita orbitale da BSTAR, ground track 90 min, disclaimer ±20% |
-| 🛰️ **ISS Live** | Posizione real-time, pass predictor 48h, export calendario `.ics` |
+| 🛰️ **ISS Live** | Posizione real-time, terminatore giorno/notte, pass predictor 48h, export `.ics` |
 | 📚 **Educa** | Glossario, storia, filiera scientifica, fonti ufficiali |
 | 🌍 **i18n** | Italiano + inglese con auto-detection del browser |
 | 🔔 **Alert opzionali** | Soglia NEO, bolidi, passaggi ISS visibili |
 | 📱 **PWA** | Cache offline, installabile, tema dark mobile-first |
+| ↗️ **Condividi** | Web Share API + fallback clipboard per gli eventi |
 
 ### Avvio rapido
 

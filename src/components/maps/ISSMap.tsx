@@ -1,8 +1,19 @@
-import { MapContainer, TileLayer, CircleMarker, Polyline, Tooltip, Marker } from 'react-leaflet';
+import { useMemo, useState } from 'react';
+import {
+  MapContainer,
+  CircleMarker,
+  Polyline,
+  Tooltip,
+  Marker,
+  ZoomControl,
+} from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import type { ISSPosition } from '@/services/issApi';
 import type { PropagatedPosition } from '@/lib/sgp4Lite';
+import MapLayerToggle, { type LayerId } from './MapLayerToggle';
+import SatelliteTileLayer from './SatelliteTileLayer';
+import { terminator } from '@/lib/dayNightTerminator';
 
 interface Props {
   position: ISSPosition | null;
@@ -19,22 +30,44 @@ const issIcon = L.divIcon({
 });
 
 export default function ISSMap({ position, groundTrack, observer, height = 320 }: Props) {
+  const [layer, setLayer] = useState<LayerId>('osm');
+  const [showTerm, setShowTerm] = useState(true);
   const center: [number, number] = position ? [position.lat, position.lon] : [0, 0];
   const trackLine = (groundTrack ?? []).map<[number, number]>((p) => [p.lat, p.lon]);
+  // Recompute terminator once per minute by re-rendering — cheap; map ‘key' the tick
+  const minuteTick = Math.floor(Date.now() / 60000);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const term = useMemo(() => terminator(new Date()), [minuteTick]);
 
   return (
-    <div className="overflow-hidden rounded-2xl border border-space-500/30">
+    <div className="relative overflow-hidden rounded-2xl border border-space-500/30">
+      <MapLayerToggle value={layer} onChange={setLayer} />
+      <button
+        type="button"
+        onClick={() => setShowTerm((v) => !v)}
+        aria-pressed={showTerm}
+        className={`glass absolute left-2 top-2 z-[400] rounded-lg px-2 py-1 text-[11px] font-mono uppercase tracking-wide ${
+          showTerm ? 'text-cyan-glow' : 'text-space-300'
+        }`}
+      >
+        ☀ day/night
+      </button>
       <MapContainer
         center={center}
         zoom={2}
         style={{ height: `${height}px`, width: '100%' }}
         worldCopyJump
         scrollWheelZoom
+        zoomControl={false}
       >
-        <TileLayer
-          attribution='&copy; OSM'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
+        <SatelliteTileLayer layer={layer} />
+        <ZoomControl position="bottomright" />
+        {showTerm && (
+          <Polyline
+            positions={term}
+            pathOptions={{ color: '#ff5cd0', weight: 1.5, opacity: 0.6, dashArray: '4 4' }}
+          />
+        )}
         {trackLine.length > 1 && (
           <Polyline
             positions={trackLine}

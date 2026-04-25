@@ -1,30 +1,41 @@
-import { MapContainer, TileLayer, CircleMarker, Popup } from 'react-leaflet';
+import { useState } from 'react';
+import { MapContainer, CircleMarker, Popup, ZoomControl } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import type { FireballEvent } from '@/services/cneosFireballApi';
 import { formatEnergy, formatDateTimeLocal } from '@/utils/formatters';
 import { useTranslation } from '@/i18n';
+import MapLayerToggle, { type LayerId } from './MapLayerToggle';
+import SatelliteTileLayer from './SatelliteTileLayer';
 
 interface Props {
   events: FireballEvent[];
   height?: number;
+  initialLayer?: LayerId;
+  enableLayerToggle?: boolean;
 }
 
-export default function FireballMap({ events, height = 360 }: Props) {
+export default function FireballMap({
+  events,
+  height = 360,
+  initialLayer = 'osm',
+  enableLayerToggle = true,
+}: Props) {
   const { t, language } = useTranslation();
+  const [layer, setLayer] = useState<LayerId>(initialLayer);
 
   return (
-    <div className="overflow-hidden rounded-2xl border border-space-500/30">
+    <div className="relative overflow-hidden rounded-2xl border border-space-500/30">
+      {enableLayerToggle && <MapLayerToggle value={layer} onChange={setLayer} />}
       <MapContainer
         center={[20, 0]}
         zoom={2}
         style={{ height: `${height}px`, width: '100%' }}
         worldCopyJump
         scrollWheelZoom
+        zoomControl={false}
       >
-        <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a>'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
+        <SatelliteTileLayer layer={layer} />
+        <ZoomControl position="bottomright" />
         {events.map((fb, idx) => {
           const radius = Math.max(4, Math.min(20, Math.log10(fb.energyKt + 1) * 6));
           const color =
@@ -44,14 +55,24 @@ export default function FireballMap({ events, height = 360 }: Props) {
               <Popup>
                 <div className="font-mono text-xs">
                   <div className="font-semibold">{formatDateTimeLocal(fb.epochMs, language)}</div>
-                  <div>{t('fireballs.energy')}: {formatEnergy(fb.energyKt, language)}</div>
-                  <div>{t('fireballs.lat')}: {fb.lat.toFixed(2)}°</div>
-                  <div>{t('fireballs.lon')}: {fb.lon.toFixed(2)}°</div>
+                  <div>
+                    {t('fireballs.energy')}: {formatEnergy(fb.energyKt, language)}
+                  </div>
+                  <div>
+                    {t('fireballs.lat')}: {fb.lat.toFixed(2)}°
+                  </div>
+                  <div>
+                    {t('fireballs.lon')}: {fb.lon.toFixed(2)}°
+                  </div>
                   {fb.altitudeKm !== undefined && (
-                    <div>{t('fireballs.altitude')}: {fb.altitudeKm.toFixed(1)} km</div>
+                    <div>
+                      {t('fireballs.altitude')}: {fb.altitudeKm.toFixed(1)} km
+                    </div>
                   )}
                   {fb.velocityKms !== undefined && (
-                    <div>{t('fireballs.velocity')}: {fb.velocityKms.toFixed(1)} km/s</div>
+                    <div>
+                      {t('fireballs.velocity')}: {fb.velocityKms.toFixed(1)} km/s
+                    </div>
                   )}
                 </div>
               </Popup>

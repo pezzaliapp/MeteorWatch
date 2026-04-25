@@ -6,6 +6,7 @@ import Badge from '@/components/common/Badge';
 import Loading from '@/components/common/Loading';
 import Empty from '@/components/common/Empty';
 import RiskIndicator from '@/components/common/RiskIndicator';
+import ShareButton from '@/components/common/ShareButton';
 import { useAsync } from '@/hooks/useNasaApi';
 import { fetchNeoFeed, type NeoObject } from '@/services/nasaNeoApi';
 import { fetchSentryTop, type SentryObject } from '@/services/cneosSentryApi';
@@ -29,6 +30,7 @@ export default function Asteroids() {
   const [tab, setTab] = useState<Tab>('feed');
   const [filter, setFilter] = useState<Filter>('all');
   const [sort, setSort] = useState<Sort>('date');
+  const [search, setSearch] = useState('');
   const [selected, setSelected] = useState<NeoObject | null>(null);
 
   const feedQ = useAsync(() => fetchNeoFeed(7), []);
@@ -36,8 +38,10 @@ export default function Asteroids() {
 
   const filtered = useMemo(() => {
     const data = feedQ.data ?? [];
+    const q = search.trim().toLowerCase();
     return data
       .filter((n) => {
+        if (q && !n.name.toLowerCase().includes(q)) return false;
         if (filter === 'pha') return n.isPotentiallyHazardous;
         if (filter === 'close') return n.closeApproach.missDistanceKm <= LD_KM;
         if (filter === 'big') return (n.diameterKmMin + n.diameterKmMax) / 2 >= 0.1;
@@ -52,7 +56,7 @@ export default function Asteroids() {
         if (sort === 'hazardous') return Number(b.isPotentiallyHazardous) - Number(a.isPotentiallyHazardous);
         return a.closeApproach.epochMs - b.closeApproach.epochMs;
       });
-  }, [feedQ.data, filter, sort]);
+  }, [feedQ.data, filter, sort, search]);
 
   return (
     <div className="space-y-6">
@@ -79,6 +83,23 @@ export default function Asteroids() {
 
       {tab === 'feed' && (
         <>
+          <div className="glass flex flex-wrap items-center gap-2 p-2">
+            <span className="text-space-300" aria-hidden>🔍</span>
+            <input
+              type="search"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder={language === 'it' ? 'Cerca per nome…' : 'Search by name…'}
+              aria-label={language === 'it' ? 'Cerca asteroidi' : 'Search asteroids'}
+              className="flex-1 bg-transparent text-sm outline-none placeholder:text-space-300"
+            />
+            {search && (
+              <button onClick={() => setSearch('')} className="btn-ghost text-xs" aria-label="Clear">
+                ✕
+              </button>
+            )}
+          </div>
+
           <div className="flex flex-wrap gap-2 text-xs">
             <FilterBtn active={filter === 'all'} onClick={() => setFilter('all')}>
               {t('asteroids.filterAll')}
@@ -277,14 +298,21 @@ function NeoDetailModal({ neo, onClose }: { neo: NeoObject; onClose: () => void 
           {neo.isSentry && <Badge tone="magenta">Sentry</Badge>}
         </div>
 
-        <a
-          className="btn-primary w-full"
-          href={neo.nasaJplUrl}
-          target="_blank"
-          rel="noreferrer"
-        >
-          NASA JPL Small-Body ↗
-        </a>
+        <div className="flex flex-wrap gap-2">
+          <a
+            className="btn-primary flex-1"
+            href={neo.nasaJplUrl}
+            target="_blank"
+            rel="noreferrer"
+          >
+            NASA JPL Small-Body ↗
+          </a>
+          <ShareButton
+            title={`MeteorWatch — ${neo.name}`}
+            text={`${neo.name} passa a ${(neo.closeApproach.missDistanceKm / 384400).toFixed(2)} LD il ${new Date(neo.closeApproach.epochMs).toLocaleDateString()}`}
+            url={neo.nasaJplUrl}
+          />
+        </div>
       </div>
     </div>
   );

@@ -4,7 +4,7 @@ import Card from '@/components/common/Card';
 import { useSettingsStore } from '@/store/settingsStore';
 import { useNotifications } from '@/hooks/useNotifications';
 
-const VERSION = '1.0.0';
+const VERSION = '1.1.0';
 
 export default function About() {
   const { t, language } = useTranslation();
