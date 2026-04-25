@@ -91,6 +91,15 @@ sempre branch dedicato + Pull Request:
 ### In caso di modifica mista (docs + codice)
 Trattare l'intero set come "codice" → branch + PR.
 
+### File privati di marketing/comunicazione
+I post per social, le strategie di lancio, e qualsiasi materiale
+che non sia documentazione tecnica del progetto NON vanno
+committati nel repo pubblico.
+- Tenerli in `~/MeteorWatch-private/` (fuori dal git tracking)
+  oppure in `/docs/private/` (coperto da `.gitignore`)
+- Mai committare file con nome `*.private.md`, `drafts/`,
+  `marketing/`
+
 ## Decisioni architetturali (NON ridiscutere)
 
 1. **Base path**: `/MeteorWatch/` per Vite, manifest, router, SW. Deploy target `https://www.alessandropezzali.it/MeteorWatch/`.
