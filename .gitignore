@@ -9,6 +9,7 @@ dev-dist
 build
 coverage
 .vite
+*.tsbuildinfo
 
 # logs
 npm-debug.log*

@@ -1,0 +1,38 @@
+[
+  {
+    "id": "fallback-2024YR4",
+    "name": "(2024 YR4)",
+    "designation": "2024 YR4",
+    "isPotentiallyHazardous": true,
+    "isSentry": true,
+    "absoluteMagnitude": 23.9,
+    "diameterKmMin": 0.04,
+    "diameterKmMax": 0.09,
+    "closeApproach": {
+      "closeApproachDate": "2026-12-22",
+      "epochMs": 1798934400000,
+      "velocityKms": 13.42,
+      "missDistanceKm": 8200000,
+      "orbitingBody": "Earth"
+    },
+    "nasaJplUrl": "https://ssd.jpl.nasa.gov/tools/sbdb_lookup.html#/?sstr=2024%20YR4"
+  },
+  {
+    "id": "fallback-99942",
+    "name": "99942 Apophis (2004 MN4)",
+    "designation": "99942 Apophis",
+    "isPotentiallyHazardous": true,
+    "isSentry": false,
+    "absoluteMagnitude": 19.7,
+    "diameterKmMin": 0.31,
+    "diameterKmMax": 0.34,
+    "closeApproach": {
+      "closeApproachDate": "2029-04-13",
+      "epochMs": 1869984000000,
+      "velocityKms": 7.42,
+      "missDistanceKm": 38000,
+      "orbitingBody": "Earth"
+    },
+    "nasaJplUrl": "https://ssd.jpl.nasa.gov/tools/sbdb_lookup.html#/?sstr=Apophis"
+  }
+]
