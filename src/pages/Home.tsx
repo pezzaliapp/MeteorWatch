@@ -26,6 +26,8 @@ import { homeDeepLink } from '@/lib/deepLinkBuilder';
 import { usePeriodicSync } from '@/hooks/usePeriodicSync';
 import { useState, useEffect } from 'react';
 import type { ISSPosition } from '@/services/issApi';
+import { fetchApodToday } from '@/services/apodApi';
+import { fetchEpicLatest } from '@/services/epicApi';
 
 export default function Home() {
   const { t, language } = useTranslation();
@@ -33,6 +35,8 @@ export default function Home() {
   const fbQ = useAsync(() => fetchFireballs(50), []);
   const sentryQ = useAsync(() => fetchSentryTop(5), []);
   const reentryQ = useAsync(() => fetchReentryGroup(), []);
+  const apodQ = useAsync(() => fetchApodToday(), []);
+  const epicQ = useAsync(() => fetchEpicLatest(), []);
   const [iss, setIss] = useState<ISSPosition | null>(null);
   usePeriodicSync(() => {
     fetchISSPosition().then(setIss).catch(() => undefined);
@@ -270,6 +274,53 @@ export default function Home() {
             </div>
           )}
         </Card>
+      </div>
+
+      <div className="grid gap-4 md:grid-cols-2">
+        {apodQ.data && apodQ.data.mediaType === 'image' && (
+          <Card
+            tone="cyan"
+            title={apodQ.data.title}
+            subtitle={`APOD · ${apodQ.data.date}`}
+            action={
+              <Link to="/apod" className="btn-ghost text-xs">
+                {t('home.viewAll')} →
+              </Link>
+            }
+          >
+            <Link to="/apod" className="block">
+              <img
+                src={apodQ.data.url}
+                alt={apodQ.data.title}
+                loading="lazy"
+                className="aspect-video w-full rounded-xl border border-space-500/30 object-cover"
+              />
+            </Link>
+            <p className="mt-2 line-clamp-3 text-xs text-space-300">{apodQ.data.explanation}</p>
+          </Card>
+        )}
+        {epicQ.data?.[0] && (
+          <Card
+            tone="magenta"
+            title={t('earth.latestImage')}
+            subtitle={`DSCOVR EPIC · ${epicQ.data[0].date.split(' ')[0]}`}
+            action={
+              <Link to="/earth" className="btn-ghost text-xs">
+                {t('home.viewAll')} →
+              </Link>
+            }
+          >
+            <Link to="/earth" className="block">
+              <img
+                src={epicQ.data[0].thumbUrl}
+                alt={epicQ.data[0].caption}
+                loading="lazy"
+                className="aspect-square w-full max-w-xs rounded-xl border border-space-500/30 object-cover"
+              />
+            </Link>
+            <p className="mt-2 line-clamp-2 text-xs text-space-300">{epicQ.data[0].caption}</p>
+          </Card>
+        )}
       </div>
 
       <a
