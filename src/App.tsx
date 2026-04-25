@@ -1,6 +1,9 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
+import { useEffect } from 'react';
 import Layout from './components/layout/Layout';
 import HtmlLangSync from './i18n/HtmlLangSync';
+import { startNotificationScheduler } from './lib/notificationScheduler';
+import { useSettingsStore } from './store/settingsStore';
 import Home from './pages/Home';
 import Asteroids from './pages/Asteroids';
 import Fireballs from './pages/Fireballs';
@@ -12,6 +15,12 @@ import Education from './pages/Education';
 import About from './pages/About';
 
 export default function App() {
+  const notifEnabled = useSettingsStore((s) => s.notificationsEnabled);
+  useEffect(() => {
+    if (!notifEnabled) return;
+    return startNotificationScheduler();
+  }, [notifEnabled]);
+
   return (
     <Layout>
       <HtmlLangSync />
