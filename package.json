@@ -1,7 +1,7 @@
 {
   "name": "meteorwatch",
   "private": true,
-  "version": "1.1.0-dev",
+  "version": "1.1.0",
   "type": "module",
   "description": "MeteorWatch — PWA per asteroidi NEO, bolidi, sciami meteorici, rientri atmosferici e ISS tracker. Sister app di CubeSat Constellation.",
   "author": "Alessandro Pezzali <pezzalialessandro@gmail.com>",

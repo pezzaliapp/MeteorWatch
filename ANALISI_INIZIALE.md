@@ -59,6 +59,9 @@ Calcoli orbitali (propagazione SGP4, ground track, pass predictor, BSTAR lifetim
 | CelesTrak TLE ISS | `celestrak.org/.../CATNR=25544` | 6 h | TLE statico |
 | CelesTrak Reentry group | `celestrak.org/.../GROUP=last-30-days` | 6 h | JSON locale |
 | IMO Meteor calendar | curato in `services/meteorShowersData.ts` | n/a (statico) | — |
+| **NASA APOD** | `api.nasa.gov/planetary/apod` | 6 h | DEMO_KEY |
+| **NASA EPIC** | `epic.gsfc.nasa.gov/api/natural` | 2 h | array vuoto |
+| **NASA GIBS** | `gibs.earthdata.nasa.gov/wmts/...` (WMTS REST) | tile-cache via SW | OSM |
 
 ## Decisioni architetturali
 
@@ -93,13 +96,23 @@ Calcoli orbitali (propagazione SGP4, ground track, pass predictor, BSTAR lifetim
 
 ## Roadmap
 
-### v1.x (incrementale)
+### v1.1 — completato (2026-04-25)
+- ✅ Sky Tonight con luna/sole/twilights/ISS/sciami/NEO
+- ✅ NASA APOD integration (Home + /apod + 7-day archive)
+- ✅ NASA EPIC + NASA GIBS satellite layers
+- ✅ Day/night terminator su mappa ISS e Earth
+- ✅ NEO search + Web Share API
+- ✅ Code-split routes, Skeleton, ErrorBoundary
+- ✅ A11y: skip-link, focus-visible, prefers-reduced-motion
+- ✅ Desktop nav
+
+### v1.2+ (incrementale)
 - Tab "approcci storici / futuri" nel dettaglio NEO via CNEOS CAD batch
 - Mappa radianti meteor showers (sfera celeste SVG)
 - Periodic Background Sync per notifiche se browser supporta
 - Storico bolidi più ricco (filtri lat/lon, heat-map)
 - Test e2e con Playwright
-- Audio cue opzionale per nuova fireball alert
+- AR mode (DeviceOrientationEvent) puntamento cielo
 
 ### v2.x (visione)
 - Dataset offline più ampio (snapshot mensile pre-bundled)
