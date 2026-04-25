@@ -14,6 +14,15 @@ const items: { path: string; key: string; icon: ReactNode }[] = [
     ),
   },
   {
+    path: '/tonight',
+    key: 'nav.tonight',
+    icon: (
+      <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2">
+        <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z" />
+      </svg>
+    ),
+  },
+  {
     path: '/asteroids',
     key: 'nav.asteroids',
     icon: (
@@ -59,7 +68,7 @@ export default function BottomNav() {
   const { t } = useTranslation();
   return (
     <nav className="safe-bottom fixed bottom-0 left-0 right-0 z-30 border-t border-space-500/30 bg-space-900/85 backdrop-blur-md md:hidden">
-      <div className="mx-auto grid max-w-6xl grid-cols-5">
+      <div className="mx-auto grid max-w-6xl grid-cols-6">
         {items.map((it) => (
           <NavLink
             key={it.path}

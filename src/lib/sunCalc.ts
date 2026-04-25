@@ -93,13 +93,6 @@ function getSetTime(h: number, lw: number, phi: number, dec: number, n: number, 
   return solarTransitJ(a, M, L);
 }
 
-function getRiseTime(h: number, lw: number, phi: number, dec: number, n: number, M: number, L: number, Jset: number, Jnoon: number) {
-  const w = hourAngle(h, phi, dec);
-  if (w === null) return null;
-  void Jset;
-  return Jnoon - (Jset - Jnoon === 0 ? w / (2 * Math.PI) : 0) - w / (2 * Math.PI);
-}
-
 export function computeSunTimes(date: Date, lat: number, lon: number): SunTimes {
   const lw = -lon * DEG;
   const phi = lat * DEG;
