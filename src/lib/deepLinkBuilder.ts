@@ -1,6 +1,6 @@
 import type { TleSet } from '@/types';
 
-const CUBESAT_BASE = 'https://pezzaliapp.github.io/CubeSat_Constellation/';
+const CUBESAT_BASE = 'https://www.alessandropezzali.it/CubeSat_Constellation/';
 
 function toBase64Utf8(input: string): string {
   if (typeof window === 'undefined') {
