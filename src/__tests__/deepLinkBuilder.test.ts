@@ -8,7 +8,7 @@ describe('deepLinkBuilder', () => {
       line1: '1 25544U 98067A   26115.50000000  .00012345  00000-0  22678-3 0  9990',
       line2: '2 25544  51.6420 200.0000 0001234  10.0000 350.0000 15.50000000400000',
     });
-    expect(link).toMatch(/^https:\/\/pezzaliapp\.github\.io\/CubeSat_Constellation\/\?tle=/);
+    expect(link).toMatch(/^https:\/\/www\.alessandropezzali\.it\/CubeSat_Constellation\/\?tle=/);
     const encoded = decodeURIComponent(link.split('?tle=')[1]);
     const decoded = atob(encoded);
     expect(decoded).toContain('ISS (ZARYA)');
@@ -20,6 +20,6 @@ describe('deepLinkBuilder', () => {
   });
 
   it('homeDeepLink is the bare CubeSat Constellation URL', () => {
-    expect(homeDeepLink()).toBe('https://pezzaliapp.github.io/CubeSat_Constellation/');
+    expect(homeDeepLink()).toBe('https://www.alessandropezzali.it/CubeSat_Constellation/');
   });
 });
