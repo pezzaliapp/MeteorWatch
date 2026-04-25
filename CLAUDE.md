@@ -63,7 +63,33 @@ Le seguenti origini sono autorizzate:
 - `ssd-api.jpl.nasa.gov`
 - `celestrak.org`
 - `api.wheretheiss.at`
+- `epic.gsfc.nasa.gov`
+- `gibs.earthdata.nasa.gov`
 - `registry.npmjs.org`
+
+## Workflow operativo — preferenze utente
+
+### Documentazione → push diretto su main pre-approvato
+Per modifiche che riguardano SOLO file di documentazione, commit
+e push diretto su `main` sono pre-approvati e non richiedono
+conferma esplicita.
+
+File coperti dalla policy:
+- `docs/**` (qualsiasi file dentro la cartella docs)
+- `README.md`, `CHANGELOG.md`, `ANALISI_INIZIALE.md`, `CLAUDE.md`,
+  `LICENSE`, `CONTRIBUTING.md` di root
+- File `.md` di documentazione in genere
+
+### Codice → sempre via branch + PR
+Per qualsiasi modifica a codice o configurazioni dell'app usare
+sempre branch dedicato + Pull Request:
+- `src/**`, `public/**`, `scripts/**`
+- Configurazioni: `vite.config.ts`, `package.json`, `tsconfig*.json`,
+  `tailwind.config.*`, `eslint.config.*`, `.prettierrc*`, ecc.
+- Workflow CI/CD: `.github/**`
+
+### In caso di modifica mista (docs + codice)
+Trattare l'intero set come "codice" → branch + PR.
 
 ## Decisioni architetturali (NON ridiscutere)
 
